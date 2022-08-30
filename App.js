@@ -7,41 +7,53 @@
  */
 
 import React from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import {
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import { useState } from 'react';
 
 const App = () => {
+  const [item, setItem] = useState([
+    { key: 1, item: 'item 1' },
+    { key: 2, item: 'item 2' },
+    { key: 3, item: 'item 3' },
+    { key: 4, item: 'item 4' },
+    { key: 5, item: 'item 5' },
+    { key: 6, item: 'item 6' },
+    { key: 7, item: 'item 7' },
+    { key: 8, item: 'item 8' },
+    { key: 9, item: 'item 9' },
+    { key: 10, item: 'item 10' },
+    { key: 11, item: 'item 11' },
+    { key: 12, item: 'item 12' },
+  ]);
+
+  const [Refresh, setRefresh] = useState(false);
+
+  const handleRefresh = () => {
+    setRefresh(true);
+    setItem([...item, { key: 13, item: 'Sumant' }]);
+    setRefresh(false);
+  };
+
   return (
-    <View style={styles.body}>
-      <View style={styles.container1}>
-        <View style={styles.View1}>
-          <Text style={{ fontSize: 40, color: 'white' }}>1</Text>
-        </View>
-        <View style={styles.View2}>
-          <Text style={{ fontSize: 40, color: 'white' }}>2</Text>
-        </View>
-        <View style={styles.View3}>
-          <Text style={{ fontSize: 40 }}>3</Text>
-        </View>
-      </View>
-      <View style={styles.container1}>
-        <View style={styles.View4}>
-          <Text style={{ fontSize: 40 }}>4</Text>
-        </View>
-      </View>
-      <View style={styles.container1}>
-        <View style={styles.View5}>
-          <Text style={{ fontSize: 40 }}>5</Text>
-        </View>
-      </View>
-      <View style={styles.container3}>
-        <View style={styles.View6}>
-          <Text style={{ fontSize: 40 }}>6</Text>
-        </View>
-        <View style={styles.View7}>
-          <Text style={{ fontSize: 40 }}>7</Text>
-        </View>
-      </View>
-    </View>
+    <ScrollView
+      style={styles.body}
+      refreshControl={
+        <RefreshControl refreshing={Refresh} onRefresh={handleRefresh} />
+      }>
+      {item.map(object => {
+        return (
+          <View style={styles.item} key={object.key}>
+            <Text style={styles.text}>{object.item}</Text>
+          </View>
+        );
+      })}
+    </ScrollView>
   );
 };
 
@@ -50,61 +62,17 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#ffffff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
-  container1: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+  text: {
+    color: '#000000',
+    fontSize: 35,
   },
-  View1: {
-    flex: 1,
-    backgroundColor: 'red',
+  item: {
+    backgroundColor: 'skyblue',
+    justifyContent: 'center',
     alignItems: 'center',
-    justifyContent: 'center',
-  },
-  View2: {
-    flex: 2,
-    backgroundColor: 'blue',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  View3: {
-    flex: 3,
-    backgroundColor: 'yellow',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  View4: {
-    flex: 1,
-    backgroundColor: 'red',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  View5: {
-    flex: 1,
-    backgroundColor: 'lightgreen',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  container3: {
-    flex: 11.5,
-    flexDirection: 'row',
-    alignItems: 'stretch',
-    justifyContent: 'center',
-  },
-  View6: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  View7: {
-    flex: 1,
-    backgroundColor: 'blue',
-    alignItems: 'center',
-    justifyContent: 'center',
+    margin: 10,
+    padding: 5,
   },
 });
 
